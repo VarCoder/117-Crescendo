@@ -1,9 +1,5 @@
 package frc.robot.legacy;
 
-import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.util.WPIUtilJNI;
 
@@ -44,7 +40,6 @@ public class DrivetrainLimiter {
   public double calculate(double input) {
     double currentTime = WPIUtilJNI.now() * 1e-6;
     double elapsedTime = currentTime - m_prevTime;
-    Boolean inputPositive = input >= 0 ? true : false;
     Boolean prevPositive = m_prevVal >= 0 ? true : false;
 
     if (Math.abs(input) <= 0.05) {
