@@ -14,15 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.legacy.OldConstants;
 import frc.robot.misc.Constants;
 import frc.robot.misc.Constants.Swerve.*;
 import frc.robot.sensors.NavX;
 
 public class DriveSubsystem extends SubsystemBase {
 	// Robot swerve modules
-	private final SwerveModule[] swerveModules = OldConstants.Port.SWERVE_MODULES;
-
 
 	public NavX navx = new NavX();
 	public Field2d field2d = new Field2d();
@@ -102,7 +99,7 @@ public class DriveSubsystem extends SubsystemBase {
 	 */
 	public void setModuleStates(SwerveModuleState[] desiredStates) {
 		SwerveDriveKinematics.desaturateWheelSpeeds(
-				desiredStates, OldConstants.Prop.Drivetrain.AXIS_SPEED_MAX);
+				desiredStates, Constants.Swerve.maxSpeed);
 		Mod0.module.setDesiredState(desiredStates[0], false);
 		Mod1.module.setDesiredState(desiredStates[1], false);
 		Mod2.module.setDesiredState(desiredStates[2], false);
@@ -137,10 +134,10 @@ public class DriveSubsystem extends SubsystemBase {
 
 	public SwerveModulePosition[] getModulePositions() {
 		return new SwerveModulePosition[] {
-				swerveModules[0].getPosition(),
-				swerveModules[1].getPosition(),
-				swerveModules[2].getPosition(),
-				swerveModules[3].getPosition()
+				Mod0.module.getPosition(),
+				Mod1.module.getPosition(),
+				Mod2.module.getPosition(),
+				Mod3.module.getPosition()
 		};
 	}	
 }

@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.legacy.OldConstants;
 import frc.robot.misc.Constants;
 import frc.robot.sensors.ThriftyEncoder;
 
