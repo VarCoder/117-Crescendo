@@ -14,14 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.legacy.Constants;
-import frc.robot.misc.newConstants;
-import frc.robot.misc.newConstants.Swerve.*;
+import frc.robot.legacy.OldConstants;
+import frc.robot.misc.Constants;
+import frc.robot.misc.Constants.Swerve.*;
 import frc.robot.sensors.NavX;
 
 public class DriveSubsystem extends SubsystemBase {
 	// Robot swerve modules
-	private final SwerveModule[] swerveModules = Constants.Port.SWERVE_MODULES;
+	private final SwerveModule[] swerveModules = OldConstants.Port.SWERVE_MODULES;
 
 
 	public NavX navx = new NavX();
@@ -35,7 +35,7 @@ public class DriveSubsystem extends SubsystemBase {
 	public DriveSubsystem() {
 		navx.reset();
 		swerveOdometry = new SwerveDrivePoseEstimator(
-			newConstants.Swerve.swerveKinematics,
+			Constants.Swerve.swerveKinematics,
 			navx.getAngle(),
 			new SwerveModulePosition[] {
 					Mod0.module.getPosition(),
@@ -76,7 +76,7 @@ public class DriveSubsystem extends SubsystemBase {
 	 */
 	public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean openLoop) {
 		this.openLoop = openLoop;
-		var swerveModuleStates = newConstants.Swerve.swerveKinematics.toSwerveModuleStates(
+		var swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
 				fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
 					translation.getX(),
 					translation.getY(),
@@ -88,7 +88,7 @@ public class DriveSubsystem extends SubsystemBase {
 					rotation
 					)
 				);
-		SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates,newConstants.Swerve.maxSpeed);
+		SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates,Constants.Swerve.maxSpeed);
 		Mod0.module.setDesiredState(swerveModuleStates[0], openLoop);
 		Mod1.module.setDesiredState(swerveModuleStates[1], openLoop);
 		Mod2.module.setDesiredState(swerveModuleStates[2], openLoop);
@@ -102,7 +102,7 @@ public class DriveSubsystem extends SubsystemBase {
 	 */
 	public void setModuleStates(SwerveModuleState[] desiredStates) {
 		SwerveDriveKinematics.desaturateWheelSpeeds(
-				desiredStates, Constants.Prop.Drivetrain.AXIS_SPEED_MAX);
+				desiredStates, OldConstants.Prop.Drivetrain.AXIS_SPEED_MAX);
 		Mod0.module.setDesiredState(desiredStates[0], false);
 		Mod1.module.setDesiredState(desiredStates[1], false);
 		Mod2.module.setDesiredState(desiredStates[2], false);

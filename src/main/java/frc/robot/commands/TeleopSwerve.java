@@ -6,7 +6,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.misc.newConstants;
+import frc.robot.misc.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TeleopSwerve extends Command{
@@ -29,14 +29,14 @@ public class TeleopSwerve extends Command{
     @Override
     public void execute(){
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(),
-                    newConstants.Swerve.stickDeadband);
-            double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), newConstants.Swerve.stickDeadband);
-            double rotationVal = 0.5* MathUtil.applyDeadband(rotSup.getAsDouble(), newConstants.Swerve.stickDeadband);
+                    Constants.Swerve.stickDeadband);
+            double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband);
+            double rotationVal = 0.5* MathUtil.applyDeadband(rotSup.getAsDouble(), Constants.Swerve.stickDeadband);
 
             /* Drive */
             swerve.drive(
-                new Translation2d(translationVal, strafeVal).times(newConstants.Swerve.maxSpeed),
-                rotationVal * newConstants.Swerve.maxAngularVelocity,
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
+                rotationVal * Constants.Swerve.maxAngularVelocity,
                 !FOCSup.getAsBoolean(),
                 true
             );

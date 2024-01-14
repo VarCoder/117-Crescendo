@@ -1,22 +1,17 @@
 package frc.robot.legacy;
 
-import java.util.*;
 import java.util.function.*;
 
-import javax.swing.plaf.basic.BasicComboPopup.InvocationKeyHandler;
 
-import edu.wpi.first.math.filter.*;
 
 // import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.*;
-import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.sensors.ThriftyEncoder;
 import frc.robot.subsystems.SwerveModule;
 
-public final class Constants {
+public final class OldConstants {
 
     // Ports, think DIO and CAN IDs
     // Anything that is a completely arbitrary aspect

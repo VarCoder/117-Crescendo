@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.legacy.Constants;
-import frc.robot.misc.newConstants;
+import frc.robot.legacy.OldConstants;
+import frc.robot.misc.Constants;
 import frc.robot.sensors.ThriftyEncoder;
 
 import com.revrobotics.CANSparkMax;
@@ -29,23 +29,23 @@ public class SwerveModule {
     private final ThriftyEncoder turningEncoder;
     private final SparkPIDController drivePIDController;
     private final ProfiledPIDController turningPIDController = new ProfiledPIDController(
-        newConstants.Swerve.angleKP,
-        newConstants.Swerve.angleKI,
-        newConstants.Swerve.angleKD,
+        Constants.Swerve.angleKP,
+        Constants.Swerve.angleKI,
+        Constants.Swerve.angleKD,
         new TrapezoidProfile.Constraints(
-                newConstants.Swerve.maxAngularVelocity,
-                newConstants.Swerve.maxAngularAccel)
+                Constants.Swerve.maxAngularVelocity,
+                Constants.Swerve.maxAngularAccel)
     );
 
     private final SimpleMotorFeedforward turnFeedforward = new SimpleMotorFeedforward(
-        newConstants.Swerve.angleKS,
-        newConstants.Swerve.angleKV
+        Constants.Swerve.angleKS,
+        Constants.Swerve.angleKV
     );
 
     private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(
-        newConstants.Swerve.driveKS,
-        newConstants.Swerve.driveKV,
-        newConstants.Swerve.driveKA
+        Constants.Swerve.driveKS,
+        Constants.Swerve.driveKV,
+        Constants.Swerve.driveKA
     );
     public SwerveModule(int driveMotorID, int turningMotorID, ThriftyEncoder thriftyEncoder, String name) {
         this.name = name;
@@ -67,29 +67,29 @@ public class SwerveModule {
     private void configDriveMotor(){
 
         driveMotor.restoreFactoryDefaults();
-        driveMotor.setSmartCurrentLimit(newConstants.Swerve.driveContinuousCurrentLimit);
-        driveMotor.setInverted(newConstants.Swerve.driveInvert);
-        driveMotor.setIdleMode(newConstants.Swerve.driveNeutralMode);
+        driveMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
+        driveMotor.setInverted(Constants.Swerve.driveInvert);
+        driveMotor.setIdleMode(Constants.Swerve.driveNeutralMode);
 
         /* Setup Driving PID */
-        drivePIDController.setP(newConstants.Swerve.driveKP, 0);
-        drivePIDController.setI(newConstants.Swerve.driveKI, 0);
-        drivePIDController.setD(newConstants.Swerve.driveKD, 0);
+        drivePIDController.setP(Constants.Swerve.driveKP, 0);
+        drivePIDController.setI(Constants.Swerve.driveKI, 0);
+        drivePIDController.setD(Constants.Swerve.driveKD, 0);
         drivePIDController.setOutputRange(-1, 1);
         drivePIDController.setSmartMotionMaxVelocity(10000, 0);
-        drivePIDController.setFF(newConstants.Swerve.driveKFF, 0);
+        drivePIDController.setFF(Constants.Swerve.driveKFF, 0);
         drivePIDController.setSmartMotionAccelStrategy(AccelStrategy.kSCurve, 0);
-        drivePIDController.setSmartMotionMaxAccel(newConstants.Swerve.maxAccel, 0);
+        drivePIDController.setSmartMotionMaxAccel(Constants.Swerve.maxAccel, 0);
         driveMotor.burnFlash();
         driveEncoder.setPosition(0.0);
     }
     private void configTurnMotor(){
 
         turningMotor.restoreFactoryDefaults();
-        turningMotor.setSmartCurrentLimit(newConstants.Swerve.angleContinuousCurrentLimit);
-        turningMotor.setInverted(newConstants.Swerve.angleInvert);
+        turningMotor.setSmartCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit);
+        turningMotor.setInverted(Constants.Swerve.angleInvert);
 
-        turningMotor.setIdleMode(newConstants.Swerve.angleNeutralMode);
+        turningMotor.setIdleMode(Constants.Swerve.angleNeutralMode);
         /*  Limit the PID Controller's input range between -pi and pi and set the input
         to be continuous. */
         turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
@@ -120,7 +120,7 @@ public class SwerveModule {
     private void setAngle(SwerveModuleState desiredState) {
         // Prevent rotating module if speed is less then 1%. Prevents jittering.
         Rotation2d angle =
-            (Math.abs(desiredState.speedMetersPerSecond) <= (newConstants.Swerve.maxSpeed * 0.01))
+            (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
                 ? lastAngle
                 : desiredState.angle;
         
@@ -132,7 +132,7 @@ public class SwerveModule {
     }
     private void setSpeed(SwerveModuleState desiredState, boolean openLoop){
         if (openLoop){
-            double output = desiredState.speedMetersPerSecond / newConstants.Swerve.maxSpeed;
+            double output = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
             driveMotor.set(output);
         } else{
             drivePIDController.setReference(
@@ -149,7 +149,7 @@ public class SwerveModule {
 
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            Constants.Prop.Drivetrain.WHEEL_ROT_TO_M.apply(driveEncoder.getPosition()), turningEncoder.get()
+            OldConstants.Prop.Drivetrain.WHEEL_ROT_TO_M.apply(driveEncoder.getPosition()), turningEncoder.get()
         );
     }
     public SwerveModuleState getState() {

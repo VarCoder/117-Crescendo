@@ -4,7 +4,7 @@ import java.util.function.*;
 
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.wpilibj.AnalogInput;
-import frc.robot.misc.newConstants;
+import frc.robot.misc.Constants;
 
 public class ThriftyEncoder implements Supplier<Rotation2d> {
     private final AnalogInput input;
@@ -12,7 +12,7 @@ public class ThriftyEncoder implements Supplier<Rotation2d> {
     public Rotation2d offset = new Rotation2d(0.0);
 
     public ThriftyEncoder(AnalogInput input) {
-        this(input, newConstants.Swerve.thriftyMaxVoltage);
+        this(input, Constants.Swerve.thriftyMaxVoltage);
     }
 
     public ThriftyEncoder(AnalogInput input, double read_voltage_max) {
