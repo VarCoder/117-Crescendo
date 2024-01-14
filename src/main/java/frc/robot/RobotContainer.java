@@ -44,7 +44,7 @@ public class RobotContainer {
             () -> (driverController.getRawAxis(JoystickConstants.translationAxis)),
             () -> (driverController.getRawAxis(JoystickConstants.strafeAxis)),
             () -> (driverController.getRawAxis(JoystickConstants.rotAxis)),
-            () -> false
+            () -> true
         )
     );
     

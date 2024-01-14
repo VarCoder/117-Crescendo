@@ -148,12 +148,12 @@ public class SwerveModule {
     }
 
     public SwerveModulePosition getPosition() {
-        return new SwerveModulePosition(
-            OldConstants.Prop.Drivetrain.WHEEL_ROT_TO_M.apply(driveEncoder.getPosition()), turningEncoder.get()
-        );
+        /* Convert Encoder Readings (RPM) to SwerveModulePosition's Meters field */
+        double distanceMeters = driveEncoder.getPosition() * Math.PI * Constants.Swerve.wheelDiameter/Constants.Swerve.driveGearRatio; 
+        return new SwerveModulePosition(distanceMeters,turningEncoder.get());
     }
+
     public SwerveModuleState getState() {
-        
         return new SwerveModuleState(driveEncoder.getVelocity(), turningEncoder.get());
     }
 }

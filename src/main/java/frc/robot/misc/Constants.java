@@ -15,7 +15,7 @@ public final class Constants {
 
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
-        public static final double trackWidth = Units.inchesToMeters(30);
+        public static final double trackWidth = Units.inchesToMeters(30); //TODO: Get the accurate measurement
         public static final double wheelBase = Units.inchesToMeters(30);
         public static final double wheelDiameter = Units.inchesToMeters(4.0);
         public static final double wheelCircumference = wheelDiameter * Math.PI;
@@ -156,7 +156,7 @@ public final class Constants {
         }
     }
 
-    public static final class AutoConstants {
+    public static final class AutoConstants { //TODO: Adjust these when we make our own auto
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
