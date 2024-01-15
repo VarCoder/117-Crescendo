@@ -35,12 +35,12 @@ public class SwerveModule {
                 Constants.Swerve.maxAngularVelocity,
                 Constants.Swerve.maxAngularAccel)
     );
-
+    /*
     private final SimpleMotorFeedforward turnFeedforward = new SimpleMotorFeedforward(
         Constants.Swerve.angleKS,
         Constants.Swerve.angleKV
     );
-
+    */
     private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(
         Constants.Swerve.driveKS,
         Constants.Swerve.driveKV,
@@ -68,7 +68,7 @@ public class SwerveModule {
         driveMotor.restoreFactoryDefaults();
         driveMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
         driveMotor.setInverted(Constants.Swerve.driveInvert);
-        driveMotor.setIdleMode(Constants.Swerve.driveNeutralMode);
+        driveMotor.setIdleMode(Constants.Swerve.driveIdleMode);
 
         /* Setup Driving PID */
         drivePIDController.setP(Constants.Swerve.driveKP, 0);
@@ -88,7 +88,7 @@ public class SwerveModule {
         turningMotor.setSmartCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit);
         turningMotor.setInverted(Constants.Swerve.angleInvert);
 
-        turningMotor.setIdleMode(Constants.Swerve.angleNeutralMode);
+        turningMotor.setIdleMode(Constants.Swerve.angleIdleMode);
         /*  Limit the PID Controller's input range between -pi and pi and set the input
         to be continuous. */
         turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
@@ -122,11 +122,16 @@ public class SwerveModule {
             (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
                 ? lastAngle
                 : desiredState.angle;
-        
-        final double turnOutput = turningPIDController.calculate(angle.getRadians(),
-                desiredState.angle.getRadians());
-        final double turnFeedforwardOut = turnFeedforward.calculate(turningPIDController.getSetpoint().velocity);
-        turningMotor.setVoltage(turnOutput + turnFeedforwardOut);
+        turningMotor.set(
+            turningPIDController.calculate(
+                turningEncoder.get().getRadians(),
+                desiredState.angle.getRadians()
+            )
+        );        
+        // final double turnOutput = turningPIDController.calculate(angle.getRadians(),
+        //         desiredState.angle.getRadians());
+        // final double turnFeedforwardOut = turnFeedforward.calculate(turningPIDController.getSetpoint().velocity);
+        // turningMotor.setVoltage(turnOutput + turnFeedforwardOut);
         lastAngle = angle;
     }
     private void setSpeed(SwerveModuleState desiredState, boolean openLoop){
@@ -148,7 +153,7 @@ public class SwerveModule {
 
     public SwerveModulePosition getPosition() {
         /* Convert Encoder Readings (RPM) to SwerveModulePosition's Meters field */
-        double distanceMeters = driveEncoder.getPosition() * Math.PI * Constants.Swerve.wheelDiameter/Constants.Swerve.driveGearRatio; 
+        double distanceMeters = driveEncoder.getPosition() * Constants.Swerve.driveConversionPositionFactor; 
         return new SwerveModulePosition(distanceMeters,turningEncoder.get());
     }
 
