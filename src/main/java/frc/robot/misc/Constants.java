@@ -15,8 +15,8 @@ public final class Constants {
 
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
-        public static final double trackWidth = Units.inchesToMeters(30); //TODO: Get the accurate measurement
-        public static final double wheelBase = Units.inchesToMeters(30);
+        public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: Get the accurate measurement
+        public static final double wheelBase = Units.inchesToMeters(21.73);
         public static final double wheelDiameter = Units.inchesToMeters(4.0);
         public static final double wheelCircumference = wheelDiameter * Math.PI;
 
@@ -24,7 +24,6 @@ public final class Constants {
         public static final double closedLoopRamp = 0.0;
 
         public static final double driveGearRatio = (6.75 / 1.0); // 6.75:1
-        public static final double angleGearRatio = (4 / 1.0); // TODO: Determine Later
 
         public static final SwerveDriveKinematics swerveKinematics =
             new SwerveDriveKinematics(
@@ -66,7 +65,6 @@ public final class Constants {
         public static final double driveConversionPositionFactor =
             (wheelDiameter * Math.PI) / driveGearRatio;
         public static final double driveConversionVelocityFactor = driveConversionPositionFactor / 60.0;
-        public static final double angleConversionFactor = 360.0 / angleGearRatio;
 
         /* Swerve Profiling Values */
         public static final double maxSpeed = 4.5; // meters per second
@@ -75,8 +73,8 @@ public final class Constants {
         public static final double maxAngularAccel = Math.PI;
 
         /* Neutral Modes */
-        public static final IdleMode angleNeutralMode = IdleMode.kBrake;
-        public static final IdleMode driveNeutralMode = IdleMode.kBrake;
+        public static final IdleMode angleIdleMode = IdleMode.kBrake;
+        public static final IdleMode driveIdleMode = IdleMode.kBrake;
 
         /* Motor Inverts */
         public static final boolean driveInvert = false;
