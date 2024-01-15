@@ -3,15 +3,11 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.misc.Constants;
@@ -21,28 +17,15 @@ import frc.robot.sensors.NavX;
 public class DriveSubsystem extends SubsystemBase {
 	// Robot swerve modules
 
-	public NavX navx = new NavX();
-	public Field2d field2d = new Field2d();
 	public IdleMode adjustableDriveNeutralMode;
 	public IdleMode adjustableTurnNeutralMode;
 	// Odometry class for tracking robot pose
-	public SwerveDrivePoseEstimator swerveOdometry;
 	public boolean openLoop;
+	public NavX navx = new NavX();
+
 	/** Creates a new DriveSubsystem. */
 	public DriveSubsystem() {
-		navx.reset();
-		swerveOdometry = new SwerveDrivePoseEstimator(
-			Constants.Swerve.swerveKinematics,
-			navx.getAngle(),
-			new SwerveModulePosition[] {
-					Mod0.module.getPosition(),
-					Mod1.module.getPosition(),
-					Mod2.module.getPosition(),
-					Mod3.module.getPosition()
-			},
-			new Pose2d()
-		);
-		SmartDashboard.putData("Field", field2d);
+		
 		Timer.delay(1);
 		resetEncoders();
 	}
@@ -50,7 +33,7 @@ public class DriveSubsystem extends SubsystemBase {
 	@Override
 	public void periodic() {
 		/* Update Odometry */
-		swerveOdometry.update(navx.getAngle(), getModulePositions());
+		// swerveOdometry.update(navx.getAngle(), getModulePositions());
 		
 
 		/*  */
@@ -58,7 +41,7 @@ public class DriveSubsystem extends SubsystemBase {
 		Mod1.module.setModuleIdleMode(adjustableDriveNeutralMode,adjustableTurnNeutralMode);
 		Mod2.module.setModuleIdleMode(adjustableDriveNeutralMode,adjustableTurnNeutralMode);
 		Mod3.module.setModuleIdleMode(adjustableDriveNeutralMode,adjustableTurnNeutralMode);
-		field2d.setRobotPose(swerveOdometry.getEstimatedPosition());
+		// field2d.setRobotPose(swerveOdometry.getEstimatedPosition());
 	}
 
 	// // Update the odometry in the periodic block
@@ -114,30 +97,12 @@ public class DriveSubsystem extends SubsystemBase {
 		Mod3.module.reset();
 	}
 
-	public void resetOdometry(Pose2d pose){
-		swerveOdometry.resetPosition(navx.getAngle(),getModulePositions(),pose);
-	}
-
-	/** Zeroes the heading of the robot. */
-	public void zeroHeading() {
-		navx.zeroYaw();
-	}
-
-	/**
-	 * Returns the heading of the robot.
-	 *
-	 * @return the robot's heading in degrees, from -180 to 180
-	 */
-	public double getHeading() {
-		return navx.getAngle().getDegrees();
-	}
-
 	public SwerveModulePosition[] getModulePositions() {
 		return new SwerveModulePosition[] {
-				Mod0.module.getPosition(),
-				Mod1.module.getPosition(),
-				Mod2.module.getPosition(),
-				Mod3.module.getPosition()
+			Mod0.module.getPosition(),
+			Mod1.module.getPosition(),
+			Mod2.module.getPosition(),
+			Mod3.module.getPosition()
 		};
 	}	
 }
