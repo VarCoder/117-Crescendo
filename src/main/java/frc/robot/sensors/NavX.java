@@ -16,7 +16,6 @@ public final class NavX {
         return ahrs.getRate();
     }
     public Rotation2d getAngle(){
-
         return ahrs.getRotation2d();
     }
 
