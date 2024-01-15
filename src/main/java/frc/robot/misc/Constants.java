@@ -7,7 +7,6 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.sensors.ThriftyEncoder;
-import frc.robot.subsystems.SwerveModule;
 
 public final class Constants {
     public static final class Swerve {

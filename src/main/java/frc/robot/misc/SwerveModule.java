@@ -1,7 +1,6 @@
-package frc.robot.subsystems;
+package frc.robot.misc;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.misc.Constants;
 import frc.robot.sensors.ThriftyEncoder;
 
 import com.revrobotics.CANSparkMax;

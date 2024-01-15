@@ -7,8 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.sensors.NavX;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.OperatorSystem;
+import frc.robot.subsystems.PoseEstimationSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.OperatorSystem.JoystickConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -24,6 +27,9 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem swerve = new DriveSubsystem();
   private final OperatorSystem OI = new OperatorSystem();
+  private final VisionSubsystem limelight = new VisionSubsystem();
+  private final NavX navX = new NavX();
+  private final PoseEstimationSubsystem poseEstimationSubsystem = new PoseEstimationSubsystem(swerve, limelight, navX);
   
   PS4Controller driverController = OI.driverController;
   Joystick operatorController = OI.operatorController;

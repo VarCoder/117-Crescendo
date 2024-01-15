@@ -8,8 +8,8 @@ import java.util.function.*;
 
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.wpilibj.AnalogInput;
+import frc.robot.misc.SwerveModule;
 import frc.robot.sensors.ThriftyEncoder;
-import frc.robot.subsystems.SwerveModule;
 
 public final class OldConstants {
 
