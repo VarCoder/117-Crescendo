@@ -11,9 +11,8 @@ import frc.robot.misc.Constants;
 import frc.robot.sensors.NavX;
 
 public class PoseEstimationSubsystem extends SubsystemBase {
-    public NavX navx = new NavX();
-    public Field2d field2d = new Field2d();
-    static SwerveDrivePoseEstimator swervePoseEst;
+    private Field2d field2d = new Field2d();
+    private SwerveDrivePoseEstimator m_swervePoseEstimator;
     DriveSubsystem m_swerve;
     VisionSubsystem m_limeLight;
     NavX m_NavX;
@@ -25,17 +24,17 @@ public class PoseEstimationSubsystem extends SubsystemBase {
         m_NavX = navx;
 
         m_NavX.zeroYaw();
-        swervePoseEst = new SwerveDrivePoseEstimator(
+        m_swervePoseEstimator = new SwerveDrivePoseEstimator(
             Constants.Swerve.swerveKinematics,
             m_NavX.getAngle(),
             m_swerve.getModulePositions(),
-        new Pose2d());
+            new Pose2d());
         SmartDashboard.putData("Field", field2d);
     }
 
     public void zeroAngle() {
         m_NavX.zeroYaw();
-        swervePoseEst.resetPosition(
+        m_swervePoseEstimator.resetPosition(
             m_NavX.getAngle(),
             m_swerve.getModulePositions(),
             new Pose2d(getPose().getTranslation(), new Rotation2d())
@@ -43,18 +42,18 @@ public class PoseEstimationSubsystem extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return swervePoseEst.getEstimatedPosition();
+        return m_swervePoseEstimator.getEstimatedPosition();
     }
 
     public void resetOdometry(Pose2d pose) {
-        swervePoseEst.resetPosition(m_NavX.getAngle(),m_swerve.getModulePositions(),pose);
+        m_swervePoseEstimator.resetPosition(m_NavX.getAngle(),m_swerve.getModulePositions(),pose);
     }
 
     @Override
     public void periodic(){
         DriverStation.refreshData();
-        swervePoseEst.update(m_NavX.getAngle(),m_swerve.getModulePositions());
-        field2d.setRobotPose(swervePoseEst.getEstimatedPosition());
+        m_swervePoseEstimator.update(m_NavX.getAngle(),m_swerve.getModulePositions());
+        field2d.setRobotPose(getPose());
         SmartDashboard.putData(field2d);
     }
 }

@@ -17,11 +17,11 @@ import frc.robot.sensors.NavX;
 public class DriveSubsystem extends SubsystemBase {
 	// Robot swerve modules
 
-	public IdleMode adjustableDriveNeutralMode;
-	public IdleMode adjustableTurnNeutralMode;
+	private IdleMode adjustableDriveNeutralMode;
+	private IdleMode adjustableTurnNeutralMode;
 	// Odometry class for tracking robot pose
-	public boolean openLoop;
-	public NavX navx = new NavX();
+	private boolean openLoop;
+	private NavX navx = new NavX();
 
 	/** Creates a new DriveSubsystem. */
 	public DriveSubsystem() {

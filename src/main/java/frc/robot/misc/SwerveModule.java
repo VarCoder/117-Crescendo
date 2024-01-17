@@ -19,7 +19,7 @@ import edu.wpi.first.math.trajectory.*;
 public class SwerveModule {
     private final String name;
     private Rotation2d lastAngle;
-    public final CANSparkMax driveMotor;
+    private final CANSparkMax driveMotor;
     private final CANSparkMax turningMotor;
 
 
