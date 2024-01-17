@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.wpilibj.SerialPort;
 
 public final class NavX {
-    public static AHRS ahrs = new AHRS(SerialPort.Port.kUSB);
+    private static AHRS ahrs = new AHRS(SerialPort.Port.kUSB);
 
     public NavX() {
 

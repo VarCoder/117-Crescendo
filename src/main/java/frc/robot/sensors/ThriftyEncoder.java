@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.RobotController;
 public class ThriftyEncoder implements Supplier<Rotation2d> {
     private final AnalogInput encoder;
     private boolean inverted = false;
-    public Rotation2d offset = new Rotation2d(0.0);
+    private Rotation2d offset = new Rotation2d(0.0);
 
     public ThriftyEncoder(AnalogInput encoder) {
         this.encoder = encoder;
